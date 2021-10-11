@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FileUpload</title>
+    <link href="easyui/themes/default/easyui.css" rel="stylesheet" type="text/css">
+    <link href="easyui/themes/icon.css" rel="stylesheet" type="text/css">
+    <script src="easyui/jquery.min.js" type="text/javascript"></script>
+    <script src="easyui/jquery.easyui.min.js" type="text/javascript"></script>
+    <script src="easyui/plugins/jquery.sidemenu.js" type="text/javascript"></script>
+    <script src="easyui/echarts.js" type="text/javascript"></script>
+    <script src="easyui/echarts.min.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div style="margin:20px 0;"></div>
+<div class="easyui-panel" title="Upload File" style="width:400px;padding:30px 70px 50px 70px">
+    <div style="margin-bottom:20px">
+        <div>File1:</div>
+        <input type="file" name="file1" id="file1"  style="width:100%">
+    </div>
+    <div>
+        <a href="#" id="upload" class="easyui-linkbutton" style="width:100%" onclick="uploadFile()">Upload</a>
+    </div>
+</div>
+
+<script>
+    function uploadFile() {
+        var formData = new FormData();
+        formData.append("file",$("#file1")[0].files[0]);
+        formData.append("service",'App.Passion.UploadFile');
+        $.ajax({
+            url:'/keyWordsController/keyWordsFileUpload',
+            type:'post',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success:function(data){
+                var result = data.success;
+                if(result){
+                    parent.refreshDG();
+                }
+            }
+        });
+        // parent.refreshDG();
+    }
+</script>
+
+</body>
+</html>
